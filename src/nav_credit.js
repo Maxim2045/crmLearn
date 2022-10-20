@@ -7,7 +7,7 @@ Navicon.nav_credit = (function()
         let date1 = new Date(d1);
         let date2 = new Date(d2);
         let timeDiff = Math.abs(date2.getTime() - date1.getTime());
-        let result = timeDiff / (1000 * 3600 * 24 * 365) //понимаю, что с високосными годами будут неверные расчеты. пока ничего лучше не придумал
+        let result = timeDiff / (1000 * 3600 * 24 * 365) 
         return result;
     }
     

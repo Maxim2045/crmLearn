@@ -49,33 +49,8 @@ Navicon.nav_agreemet = (function()
      return{
          onLoad: function(context)
          {
-            //debugger;
+            debugger;
             let formContext = context.getFormContext();
-            let formType = formContext.ui.getFormType();
-
-            if(formType == 1) //не рекомендуется сравнивать с значениями, лучше ввести константы
-            {
-
-
-            }
-            //let floorAttr = formContext.getAttribute("nav_floors");
-
-           // floorAttr.setRequiredLevel("required");
-
-
-           // floorAttr.setValue(100);
-            
-           //floorAttr.fireOnChange();
-
-           // floorAttr.addOnChange(floorOnChange);
-
-           // let floorAllControls = formContext.getAttribute("nav_floors").controls;
-            
-            //formContext.getControl("nav_floors").setDisabled(true);
-
-            //let developerId =  formContext.getAttribute("nav_developerid").getValue();
-
-            //console.log(developerId);
             formContext.getControl("nav_summa").setVisible(false);
             formContext.getControl("nav_fact").setVisible(false);
             formContext.getControl("nav_creditid").setVisible(false);
