@@ -9,9 +9,6 @@ Navicon.nav_agreemet = (function()
         let autoAttr = formContext.getAttribute("nav_autoid");
         let contactAttr = formContext.getAttribute("nav_contact");
 
-       // autoAttr.addOnChange("changet data " + infoForCreditOnChange);
-       // contactAttr.addOnChange("changet data " + infoForCreditOnChange);
-
         if(autoAttr.getValue() != null && contactAttr.getValue())
         {
             formContext.ui.tabs.get("tab_credit").setVisible(true);
