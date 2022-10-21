@@ -39,7 +39,24 @@ Navicon.nav_agreemet = (function()
         {
             formContext.getControl("nav_summa").setVisible(false);
             formContext.getControl("nav_fact").setVisible(false);
-            alert("no credit");
+        }
+
+    }
+
+    var removeLetters = function(stringS)
+    {
+       // return stringS.replace(/^\D+|[^\d-]+|-(?=\D+)|\D+$/gim , '');
+       return stringS.replace(/[^-0-9]/gi , '');
+       
+    }
+
+    var agreementNumberOnChange = function(context)
+    {
+        let formContext = context.getFormContext();
+        let nameAttr = formContext.getAttribute("nav_name");
+        if(nameAttr.getValue() != null)
+        {
+            nameAttr.setValue(`${removeLetters(nameAttr.getValue())}`);          
         }
 
     }
@@ -55,12 +72,14 @@ Navicon.nav_agreemet = (function()
             formContext.getControl("nav_creditid").setVisible(false);
             formContext.ui.tabs.get("tab_credit").setVisible(false);
 
-
             let autoAttr = formContext.getAttribute("nav_autoid");
             let contactAttr = formContext.getAttribute("nav_contact");
 
             autoAttr.addOnChange(infoForCreditOnChange);
             contactAttr.addOnChange(infoForCreditOnChange);
+
+            let nameAttr = formContext.getAttribute("nav_name");  //условно считает что это номер договора
+            nameAttr.addOnChange(agreementNumberOnChange);
          }
      }
 })();
