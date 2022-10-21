@@ -51,10 +51,6 @@ Navicon.nav_credit_save = (function()
             {
                 context.getEventArgs().preventDefault();
             }
-            else
-            {
-                alert("yes");
-            }
         }
     }
 })();

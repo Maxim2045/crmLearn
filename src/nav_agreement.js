@@ -9,7 +9,7 @@ Navicon.nav_agreemet = (function()
         let autoAttr = formContext.getAttribute("nav_autoid");
         let contactAttr = formContext.getAttribute("nav_contact");
 
-        if(autoAttr.getValue() != null && contactAttr.getValue())
+        if(autoAttr.getValue() != null && contactAttr.getValue() != null)
         {
             formContext.ui.tabs.get("tab_credit").setVisible(true);
             formContext.getControl("nav_creditid").setVisible(true);
@@ -21,7 +21,6 @@ Navicon.nav_agreemet = (function()
         {
             formContext.ui.tabs.get("tab_credit").setVisible(false);
             formContext.getControl("nav_creditid").setVisible(false);
-            alert("no");
         }
 
     }
