@@ -26,16 +26,30 @@ Navicon.nav_auto = (function()
         }
      
     } 
+
+    filterModels = function () {
+
+
+        let brandAttr = Xrm.Page.getAttribute("nav_brandid");
+        let brandArray =  brandAttr.getValue();
+        let brandRef = brandArray[0];
+
+        var modelsFilter = "<filter type='and'><condition attribute='nav_brandid' operator='eq' value='"+brandRef.id+"'/></filter>";
+        Xrm.Page.getControl("nav_modelid").addCustomFilter(modelsFilter, "nav_model");
+
+
+    }
      return{
          onLoad: function(context)
          {
             let formContext = context.getFormContext();
             let usedAttr = formContext.getAttribute("nav_used");
 
-           // usedAttr.fireOnChange();
+            //usedAttr.fireOnChange();
             usedAttr.addOnChange(usedOnChange);
             usedAttr.fireOnChange();
-
+            
+            formContext.getControl("nav_modelid").addPreSearch(filterModels);
          }
      }
 })();

@@ -2,6 +2,8 @@ var Navicon = Navicon || {};
 
 Navicon.nav_agreemet = (function()
 {
+    const formTypeCreate = 1;
+
     var infoForCreditOnChange = function(context)
     {
         let formContext = context.getFormContext();
@@ -16,9 +18,42 @@ Navicon.nav_agreemet = (function()
 
             let creditAttr = formContext.getAttribute("nav_creditid");
             creditAttr.addOnChange(сreditProgramOnChange);
+            creditAttr.fireOnChange();
         }
         else
         {
+            let formType = formContext.ui.getFormType();
+
+            if(formType != formTypeCreate)
+            {
+                if(autoAttr.getValue() == null)
+                {
+                    let alertStrings = { confirmButtonLabel: "ОК", text: "Для оформления договора необходимо указать автомобиль", title: "Предупреждение" };
+                    let alertOptions = { height: 120, width: 260 };
+                    Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(
+                        function (success) {
+                            console.log("Alert dialog closed");
+                        },
+                        function (error) {
+                            console.log(error.message);
+                      }
+                    );
+                }
+                if( contactAttr.getValue() == null)
+                {
+                    let alertStrings = { confirmButtonLabel: "ОК", text: "Для оформления договора необходимо указать контакт", title: "Предупреждение" };
+                    let alertOptions = { height: 120, width: 260 };
+                    Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(
+                        function (success) {
+                            console.log("Alert dialog closed");
+                        },
+                        function (error) {
+                            console.log(error.message);
+                        }
+                    );
+                }
+            }
+
             formContext.ui.tabs.get("tab_credit").setVisible(false);
             formContext.getControl("nav_creditid").setVisible(false);
         }
@@ -34,11 +69,13 @@ Navicon.nav_agreemet = (function()
         {
             formContext.getControl("nav_summa").setVisible(true);
             formContext.getControl("nav_fact").setVisible(true);
+            formContext.ui.tabs.get("tab_credit").setVisible(true);
         }
         else
         {
             formContext.getControl("nav_summa").setVisible(false);
             formContext.getControl("nav_fact").setVisible(false);
+            formContext.ui.tabs.get("tab_credit").setVisible(false);
         }
 
     }
@@ -61,7 +98,6 @@ Navicon.nav_agreemet = (function()
 
     }
 
-
      return{
          onLoad: function(context)
          {
@@ -76,7 +112,9 @@ Navicon.nav_agreemet = (function()
             let contactAttr = formContext.getAttribute("nav_contact");
 
             autoAttr.addOnChange(infoForCreditOnChange);
+            autoAttr.fireOnChange();
             contactAttr.addOnChange(infoForCreditOnChange);
+            contactAttr.fireOnChange();
 
             let nameAttr = formContext.getAttribute("nav_name");  //условно считает что это номер договора
             nameAttr.addOnChange(agreementNumberOnChange);
