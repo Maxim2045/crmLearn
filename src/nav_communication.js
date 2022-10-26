@@ -12,14 +12,14 @@ Navicon.nav_communication = (function()
         debugger;
         let formContext = context.getFormContext();
         let typeAttr = formContext.getAttribute("nav_type");
-        if(typeAttr.getValue() != null)
+        if(typeAttr.getValue() != null && typeAttr.getValue() != undefined)
         {
-            if(typeAttr.getValue() == phoneType)
+            if(typeAttr.getValue() === phoneType)
             {
                 formContext.getControl("nav_phone").setVisible(true);
                 formContext.getControl("nav_email").setVisible(false);
             }
-            else if (typeAttr.getValue() == mailType)
+            else if (typeAttr.getValue() === mailType)
             {
                 formContext.getControl("nav_phone").setVisible(false);
                 formContext.getControl("nav_email").setVisible(true);

@@ -11,7 +11,7 @@ Navicon.nav_agreemet = (function()
         let autoAttr = formContext.getAttribute("nav_autoid");
         let contactAttr = formContext.getAttribute("nav_contact");
 
-        if(autoAttr.getValue() != null && contactAttr.getValue() != null)
+        if(autoAttr.getValue() != null && autoAttr.getValue() != undefined && contactAttr.getValue() != null && contactAttr.getValue() != undefined)
         {
             formContext.ui.tabs.get("tab_credit").setVisible(true);
             formContext.getControl("nav_creditid").setVisible(true);
@@ -65,7 +65,7 @@ Navicon.nav_agreemet = (function()
 
         let creditAttr = formContext.getAttribute("nav_creditid");
 
-        if(creditAttr.getValue() != null)
+        if(creditAttr.getValue() != null && creditAttr.getValue() != undefined)
         {
             formContext.getControl("nav_summa").setVisible(true);
             formContext.getControl("nav_fact").setVisible(true);
@@ -80,18 +80,17 @@ Navicon.nav_agreemet = (function()
 
     }
 
-    var removeLetters = function(stringS)
+    removeLetters = function(stringS)
     {
-       // return stringS.replace(/^\D+|[^\d-]+|-(?=\D+)|\D+$/gim , '');
-       return stringS.replace(/[^-0-9]/gi , '');
-       
+   // return stringS.replace(/^\D+|[^\d-]+|-(?=\D+)|\D+$/gim , '');
+        return stringS.replace(/[^-0-9]/gi , '');  
     }
 
     var agreementNumberOnChange = function(context)
     {
         let formContext = context.getFormContext();
         let nameAttr = formContext.getAttribute("nav_name");
-        if(nameAttr.getValue() != null)
+        if(nameAttr.getValue() != null && nameAttr.getValue() != undefined)
         {
             nameAttr.setValue(`${removeLetters(nameAttr.getValue())}`);          
         }

@@ -9,9 +9,9 @@ Navicon.nav_auto = (function()
         debugger;
         let formContext = context.getFormContext();
         let usedAttr = formContext.getAttribute("nav_used");
-        if(usedAttr.getValue() != null)
+        if(usedAttr.getValue() != null && usedAttr.getValue() != undefined)
         {
-            if(usedAttr.getValue() == true)
+            if(usedAttr.getValue() === true)
             {
                 formContext.getControl("nav_km").setVisible(true);
                 formContext.getControl("nav_isdamaged").setVisible(true);

@@ -18,7 +18,7 @@ Navicon.nav_credit = (function()
         let dateStartAttr = formContext.getAttribute("nav_datestart");
         let dateEndAttr = formContext.getAttribute("nav_dateend");
     
-        if(dateStartAttr.getValue() && dateEndAttr.getValue())
+        if(dateStartAttr.getValue() != null && dateStartAttr.getValue() != undefined && dateEndAttr.getValue() != null && dateEndAttr.getValue() != undefined)
         {
             let yearsDiffResult = yearsDiff(dateStartAttr.getValue(), dateEndAttr.getValue());
             if(yearsDiffResult < 1)
