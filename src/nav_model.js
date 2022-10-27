@@ -7,7 +7,7 @@ Navicon.nav_model = (function()
   
 
     function CheckUserSARole() {
-        let currentUserId = Xrm.Page.context.getUserId();
+        let currentUserId = Xrm.Page.context.getUserId(); //устревшее
         let currentUserRoles = getCurrentUserRoles(currentUserId);
         var isSystem = false;
         for (let role of currentUserRoles) {
@@ -19,7 +19,6 @@ Navicon.nav_model = (function()
         return isSystem;
     }
     
-    // Get Roles of User only
     function getCurrentUserRoles(currentUserId){
         var userId = currentUserId.slice(1, -1);
         var req = new XMLHttpRequest();
@@ -48,8 +47,7 @@ Navicon.nav_model = (function()
         req.send();
         return nameRoles;
     }
-    
-    //Get Rolename based on RoleId
+
     function GetRoleName(roleId) {
         var req = new XMLHttpRequest();
         var roleName;
@@ -97,6 +95,18 @@ Navicon.nav_model = (function()
             }
             else
             {
+                let formType = formContext.ui.getFormType();
+
+                if(formType != formTypeCreate)
+                {
+                    let formControls = formContext.ui.controls;
+
+                    formControls.forEach(control => {
+                        if (control.getName() != "" && control.getName() != null)
+                        {
+                            control.setDisabled(true);
+                        }});
+                }
                 alert("У учетки есть роль системного администратора");
             }
 
