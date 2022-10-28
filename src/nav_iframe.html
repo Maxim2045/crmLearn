@@ -1,0 +1,80 @@
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src = "https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+        <script src = "ClientGlobalContext.js.aspx" type = "text/javascript"></script>
+        <script>
+           $(document).ready(function () {
+               "use strict";
+               var oParameters = GetGlobalContext().getQueryStringParameters();
+               var sParentCustId = oParameters.id;
+               fnOnPageLoad(sParentCustId);
+           });
+
+           function fnOnPageLoad(sParentCustId){
+               "use strict";
+               debugger;
+
+            var contFetchXML =        "<fetch distinct='false'>" +
+                                        "<entity name='nav_agreement'>" +
+                                            "<link-entity name='nav_auto' from='nav_autoid' to='nav_autoid' alias='na'>" +
+                                                "<attribute name='nav_modelid' />" +
+                                                "<filter>" +
+                                                    "<condition attribute='nav_brandid' operator='eq' value='" + sParentCustId + "' />" +
+                                                "</filter>" +
+                                                "<link-entity name='nav_model' from='nav_modelid' to='nav_modelid' alias='nm'>" +
+                                                    "<attribute name='nav_name' />" +
+                                                "</link-entity>" +
+                                            "</link-entity>" +
+                                            "<link-entity name='nav_credit' from='nav_creditid' to='nav_creditid' alias='nc'>" +
+                                                "<attribute name='nav_creditperiod' />" +
+                                                "<attribute name='nav_name' />" +
+                                            "</link-entity>" +
+                                        "</entity>" +
+                                    "</fetch>";
+           
+
+            let path = "?fetchXml=" + contFetchXML;
+
+           Xrm.WebApi.retrieveMultipleRecords("nav_agreement", path).then(
+               function success(result){
+                   "use strict";
+                   var oResult = result.entities;
+                   if(oResult != null)
+                   {
+                        $("CreditInfoTable").DataTable({
+                           "data": oResult,
+                           "columns":[
+                               {data: 'nc.nav_name'},
+                               {data: 'nm.nav_name'},
+                               {data: 'nc.nav_creditperiod'}
+                               //{
+                                 //  "data":"nav_agreementid",
+                                   //"defaultContent": "<i>Not set</i>"
+                               //}
+                           ]
+                       })
+                   }
+               },
+               function(oError)
+               {
+                   Xrm.Utility.alertDialog(oError.message, null);
+               }
+           )
+        }
+        //class="cell-border"
+        </script>
+    </head>
+    <body>
+        <table id="CreditInfoTable">
+            <thead>
+                <tr>
+                    <th>Кредитная программа</th>
+                    <th>Модель</th>
+                    <th>Срок кредита</th>
+                </tr>
+            </thead>
+        </table>
+    </body>
+</html>
