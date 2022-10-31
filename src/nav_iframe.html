@@ -1,9 +1,14 @@
 <html>
     <head>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <script src = "https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+        <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>-->
+        <script src="nav_jquery.min"></script>
+        <script src = "nav_jquery.dataTables"></script>
+       <!-- <script src = "https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>-->
+        <link rel="stylesheet" href="nav_jquery.dataTablesCss">
+       <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">-->
         <script src = "ClientGlobalContext.js.aspx" type = "text/javascript"></script>
+
+        <!--<script src="jquery.min.js"></script>-->
         <script>
 
         const creditColumnId = 0;
@@ -48,18 +53,7 @@
                    var oResult = result.entities;
                    if(oResult != null)
                    {
-                        $("#CreditInfoTable").DataTable({
-                           "data": oResult,
-                           "columns":[
-                              {'data': 'nav_creditname'},
-                              {'data': 'nav_modelname'},
-                              {'data': 'nav_creditperiod'}
-                               //{
-                                 //  "data":"nav_agreementid",
-                                   //"defaultContent": "<i>Not set</i>"
-                               //}
-                           ]
-                       })
+                        successGetData(oResult);
                    }
                },
                function(oError)
@@ -70,32 +64,40 @@
         };
  
 
-        $(function () {
-            $("#CreditInfoTable").on('click','td',function () {
-                var table = $('#CreditInfoTable').DataTable();
-                let selectColumnIndex = table.cell(this)[0][0].column;
-                let rowData = table.row(this).data();
-                if(selectColumnIndex != undefined && rowData != undefined)
-                {
-                    var options = {
-                    openInNewWindow : true
-                    };
+        function successGetData (oResult) {
+            $("#CreditInfoTable").DataTable({
+                           "data": oResult,
+                           "columns":[
+                              {'data': 'nav_creditname'},
+                              {'data': 'nav_modelname'},
+                              {'data': 'nav_creditperiod'}
+                           ]
+                       });
+                       $("#CreditInfoTable").on('click','td',function () {
+                        var table = $('#CreditInfoTable').DataTable();
+                        let selectColumnIndex = table.cell(this)[0][0].column;
+                        let rowData = table.row(this).data();
+                        if(selectColumnIndex != undefined && rowData != undefined)
+                        {
+                            var options = {
+                            openInNewWindow : true
+                            };
 
-                    debugger;
-                    // parent.Xrm.Utility.openEntityForm('nav_credit', cellRowData.nav_creditid_key, null, options);
+                            debugger;
+                        // parent.Xrm.Utility.openEntityForm('nav_credit', cellRowData.nav_creditid_key, null, options);
                
-                    if(selectColumnIndex === creditColumnId)
-                    {
-                        openEntityForm("nav_credit", rowData.nav_creditid_key);
-                    }
-                    else if(selectColumnIndex === modelColumnId)
-                    {
-                        openEntityForm("nav_model", rowData.nav_modelid_key);
-                    }
-                }
+                            if(selectColumnIndex === creditColumnId)
+                            {
+                                openEntityForm("nav_credit", rowData.nav_creditid_key);
+                            }
+                            else if(selectColumnIndex === modelColumnId)
+                            {
+                                openEntityForm("nav_model", rowData.nav_modelid_key);
+                            }
+                        }
 
-             });
-        });
+                        });
+        };
         function openEntityForm(entity_name, entityId){
             var entityFormOptions = {};
                         entityFormOptions["entityName"] = entity_name;

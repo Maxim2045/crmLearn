@@ -95,7 +95,7 @@ Navicon.nav_model = (function()
             }
             else
             {
-                let formType = formContext.ui.getFormType();
+               /* let formType = formContext.ui.getFormType();
 
                 if(formType != formTypeCreate)
                 {
@@ -107,7 +107,7 @@ Navicon.nav_model = (function()
                             control.setDisabled(true);
                         }});
                 }
-                alert("У учетки есть роль системного администратора");
+                alert("У учетки есть роль системного администратора");*/
             }
 
            // let k = 0;
